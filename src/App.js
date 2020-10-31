@@ -1,16 +1,17 @@
-import { Container } from "@material-ui/core";
 import React from "react";
-import Header from "./Header";
 import Introduction from "./Introduction";
 import Services from "./Services";
 import StickyFooter from "./StickyFooter";
+import Importances from "./Importances";
+import Menu from "./Menu";
 
 function App() {
   return (
     <React.Fragment>
-      <Header />
+      <Menu />
       <Introduction />
       <Services />
+      <Importances />
       <StickyFooter />
     </React.Fragment>
   );
