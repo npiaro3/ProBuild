@@ -1,9 +1,11 @@
 import React from "react";
 import Introduction from "./Introduction";
 import Services from "./Services";
-import StickyFooter from "./StickyFooter";
+import Footer from "./Footer";
 import Importances from "./Importances";
 import Menu from "./Menu";
+import GetStarted from "./GetStarted";
+import ContactInfo from "./ContactInfo";
 
 function App() {
   return (
@@ -12,7 +14,9 @@ function App() {
       <Introduction />
       <Services />
       <Importances />
-      <StickyFooter />
+      <GetStarted />
+      <ContactInfo />
+      <Footer />
     </React.Fragment>
   );
 }
