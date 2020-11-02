@@ -1,24 +1,21 @@
-import React from "react";
-import Introduction from "./Introduction";
-import Services from "./Services";
-import Footer from "./Footer";
-import Importances from "./Importances";
-import Menu from "./Menu";
-import GetStarted from "./GetStarted";
-import ContactInfo from "./ContactInfo";
+import React from 'react';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+} from "react-router-dom";
+import MainPage from './components/MainPage/MainPage';
+import DatabasePage from './components/DatabasePage/DatabasePage';
+import PageNotFound from './components/PageNotFound';
 
-function App() {
-  return (
-    <React.Fragment>
-      <Menu />
-      <Introduction />
-      <Services />
-      <Importances />
-      <GetStarted />
-      <ContactInfo />
-      <Footer />
-    </React.Fragment>
-  );
+export default function App() {
+    return (
+        <Router>
+            <Switch>
+                <Route exact path="/" component={MainPage} />
+                <Route path="/database" component={DatabasePage} />
+                <Route component={PageNotFound} />
+            </Switch>
+        </Router>
+    )
 }
-
-export default App;

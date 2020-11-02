@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -92,24 +93,26 @@ export default function ImageButton(props) {
                     height: '70vh'
                 }}
             >
-                <span
-                    className={classes.imageSrc}
-                    style={{
-                        backgroundImage: `url(${url})`,
-                    }}
-                />
-                <span className={classes.imageBackdrop} />
-                <span className={classes.imageButton}>
-                    <Typography
-                        component="span"
-                        variant="subtitle1"
-                        color="inherit"
-                        className={classes.imageTitle}
-                    >
-                        {title}
-                        <span className={classes.imageMarked} />
-                    </Typography>
-                </span>
+                <Link to="/database">
+                    <span
+                        className={classes.imageSrc}
+                        style={{
+                            backgroundImage: `url(${url})`,
+                        }}
+                    />
+                    <span className={classes.imageBackdrop} />
+                    <span className={classes.imageButton}>
+                        <Typography
+                            component="span"
+                            variant="subtitle1"
+                            color="inherit"
+                            className={classes.imageTitle}
+                        >
+                            {title}
+                            <span className={classes.imageMarked} />
+                        </Typography>
+                    </span>
+                </Link>
             </ButtonBase>
         </div>
     );

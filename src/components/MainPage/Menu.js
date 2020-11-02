@@ -21,8 +21,8 @@ import ListAltOutlinedIcon from '@material-ui/icons/ListAltOutlined';
 import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
 import KeyboardArrowRightOutlinedIcon from '@material-ui/icons/KeyboardArrowRightOutlined';
 import PhoneOutlinedIcon from '@material-ui/icons/PhoneOutlined';
-import { Link, animateScroll as scroll } from "react-scroll";
-
+import { Link as ScrollLink } from "react-scroll";
+import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -83,6 +83,10 @@ const useStyles = makeStyles((theme) => ({
         }),
         marginLeft: 0,
     },
+    link: {
+        textDecoration: 'none',
+        color: theme.palette.text.primary
+    }
 }));
 
 export default function Menu() {
@@ -117,12 +121,13 @@ export default function Menu() {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Avatar alt="ProBuild Logo" src="/images/pb-logo.png" variant="square" className={classes.avatar} />
+                    <Avatar alt="ProBuild Logo" src="/images/pb-logo.png" variant="square" />
                     <Typography variant="h3" noWrap>
                         ProBuild
-          </Typography>
+                    </Typography>
                 </Toolbar>
             </AppBar>
+            <Toolbar />
             <Drawer
                 className={classes.drawer}
                 variant="persistent"
@@ -139,14 +144,7 @@ export default function Menu() {
                 </div>
                 <Divider />
                 <List>
-                    <Link
-                        activeClass="active"
-                        to=""
-                        spy={true}
-                        smooth={true}
-                        offset={-70}
-                        duration={500}
-                    >
+                    <Link to="/database" className={classes.link}>
                         <ListItem button key='View Player Database'>
                             <ListItemIcon>
                                 <PageviewOutlinedIcon />
@@ -155,7 +153,7 @@ export default function Menu() {
                         </ListItem>
                     </Link>
 
-                    <Link
+                    <ScrollLink
                         activeClass="active"
                         to="services"
                         spy={true}
@@ -169,9 +167,9 @@ export default function Menu() {
                             </ListItemIcon>
                             <ListItemText primary='Services' />
                         </ListItem>
-                    </Link>
+                    </ScrollLink>
 
-                    <Link
+                    <ScrollLink
                         activeClass="active"
                         to="importances"
                         spy={true}
@@ -185,9 +183,9 @@ export default function Menu() {
                             </ListItemIcon>
                             <ListItemText primary='Why Choose Us?' />
                         </ListItem>
-                    </Link>
+                    </ScrollLink>
 
-                    <Link
+                    <ScrollLink
                         activeClass="active"
                         to="get-started"
                         spy={true}
@@ -201,11 +199,11 @@ export default function Menu() {
                             </ListItemIcon>
                             <ListItemText primary='Get Started' />
                         </ListItem>
-                    </Link>
+                    </ScrollLink>
                 </List>
                 <Divider />
                 <List>
-                    <Link
+                    <ScrollLink
                         activeClass="active"
                         to="contact info"
                         spy={true}
@@ -219,7 +217,7 @@ export default function Menu() {
                             </ListItemIcon>
                             <ListItemText primary='Contact Info' />
                         </ListItem>
-                    </Link>
+                    </ScrollLink>
                 </List>
             </Drawer>
         </div>
