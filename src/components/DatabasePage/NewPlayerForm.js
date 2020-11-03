@@ -5,15 +5,13 @@ import { useForm, Form } from '../useForm';
 import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
 
 const initialFValues = {
-    id: 0,
     firstname: '',
-    lastname: '',
-    skillId: '',
+    lastname: ''
 }
 
 export default function NewPlayerForm(props) {
 
-    const { addEmployee, recordForEdit } = props
+    const { addOrEdit, recordForEdit } = props
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
@@ -24,8 +22,9 @@ export default function NewPlayerForm(props) {
         // change this bottom conditional to only throw an error when the interface of selected skills is empty
         // the way it's set up now will always throw an error if no skill is selected in thedropdown menu
         // but it might still throw an error even if skills have already been selected
-        if ('skillId' in fieldValues)
-            temp.skillId = fieldValues.skillId.length !== 0 ? "" : "This field is required."
+
+        // if ('skillId' in fieldValues)
+        //     temp.skillId = fieldValues.skillId.length !== 0 ? "" : "This field is required."
         setErrors({
             ...temp
         })
@@ -46,7 +45,7 @@ export default function NewPlayerForm(props) {
     const handleSubmit = e => {
         e.preventDefault()
         if (validate()) {
-            addEmployee(values, resetForm);
+            addOrEdit(values, resetForm);
         }
     }
 
@@ -62,9 +61,7 @@ export default function NewPlayerForm(props) {
 
     useEffect(() => {
         if (recordForEdit != null)
-            setValues({
-                ...recordForEdit
-            })
+            setValues({ ...recordForEdit })
     }, [recordForEdit])
 
     return (
@@ -97,7 +94,7 @@ export default function NewPlayerForm(props) {
                         <Controls.Select
                             name="skillId"
                             label="Select a Skill to Add"
-                            value={values.skillId}
+                            // value={values.skillId}
                             onChange={handleInputChange} // probably delete this onChange because the button added below will suffice 
                             //options={} populate the current skill list here (use graphql operation)
                             error={errors.skillId}
@@ -129,6 +126,10 @@ export default function NewPlayerForm(props) {
                         {/* Add a Button here (just a simple blue +) that onClick gets the value
                      from the input with name=newSkill and add it to the UI mentioned in handleAddButtonSubmit above*/}
                     </Grid>
+                    <Grid container xs={12} style={{ height: '4vh' }} />
+                    <Typography variant='h5'>
+                        Skills to Add:
+                    </Typography>
                     <Grid container xs={12} justify="flex-start" alignItems="flex-start" style={{ height: '28vh' }}>
 
                     </Grid>

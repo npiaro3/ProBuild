@@ -30,7 +30,7 @@ export default function useTable(employees, headCells, filterFn) {
     const [orderBy, setOrderBy] = useState()
 
     const TblContainer = props => (
-        <Table className={classes.table}>
+        <Table stickyHeader className={classes.table}>
             {props.children}
         </Table>
     )
