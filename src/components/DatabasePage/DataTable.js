@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { API, graphqlOperation } from 'aws-amplify'
 import { listEmployees as ListEmployees, listSkills as ListSkills } from '../../graphql/queries'
-import { createEmployee as CreateEmployee } from '../../graphql/mutations'
+import { createEmployee as CreateEmployee, createSkill as CreateSkill, createEmployeeSkills as CreateEmployeeSkills } from '../../graphql/mutations'
 import useTable from './useTable';
 import { InputAdornment, makeStyles, Paper, TableBody, TableCell, TableRow, Toolbar } from '@material-ui/core';
 import Controls from "../controls/Controls";
@@ -9,6 +8,7 @@ import { Search } from "@material-ui/icons";
 import AddIcon from '@material-ui/icons/Add';
 import Popup from '../Popup';
 import NewPlayerForm from './NewPlayerForm'
+import { API, graphqlOperation } from 'aws-amplify'
 import Amplify from 'aws-amplify'
 import config from '../../aws-exports'
 Amplify.configure(config)
@@ -54,13 +54,42 @@ export default function DataTable() {
         }
     }
 
-    async function addEmployee(newEmployeeValues) {
+    async function addEmployee(newEmployeeValues, prevSkills, chipData) {
+        // create newskills by parsing the chipdata variable correctly
+        chipData = chipData.filter(chip => chip.key !== 0)
+        chipData.map((chip, index) => {
+            if (chip.isBrandNew) {
+                (async () => {
+                    try {
+                        const newSkill = await API.graphql(graphqlOperation(CreateSkill, { input: { name: chip.label } }))
+                        console.log(newSkill)
+                        chipData[index]["id"] = newSkill.data.createSkill.id
+                    } catch (err) {
+                        console.log('There was an error adding that skill to database...', err)
+                    }
+                })();
+            }
+            return null
+        })
         try {
-            await API.graphql(graphqlOperation(CreateEmployee, { input: newEmployeeValues }))
+            const newEmployee = await API.graphql(graphqlOperation(CreateEmployee, { input: newEmployeeValues }))
+            const newEmployeeId = newEmployee.data.createEmployee.id
+
+            chipData.map(chip => {
+                (async () => {
+                    try {
+                        await API.graphql(graphqlOperation(CreateEmployeeSkills, { input: { employeeSkillsEmployeeId: newEmployeeId, employeeSkillsSkillId: chip.id } }))
+                    } catch (err) {
+                        console.log('There was an error adding that skill to the player...', err)
+                        console.log(chip)
+                    }
+                })();
+                return null
+            })
         } catch (err) {
             console.log('There was an error adding that player to database...', err)
         }
-        getData()
+        getData() // may not need this line because the component will reload when the popup window is close ( <==== double check this)
     }
 
     const { TblContainer, TblHead, TblPagination, employeesAfterPagingAndSorting } = useTable(employees, headCells, filterFn);
@@ -85,8 +114,8 @@ export default function DataTable() {
         })
     }
     // implement this !
-    const addOrEdit = (employeeValues, resetForm) => {
-        addEmployee(employeeValues)
+    const addOrEdit = (newEmployeeValues, prevSkills, chipData, resetForm) => {
+        addEmployee(newEmployeeValues, prevSkills, chipData)
         // // just only add employee for now (work on update -else statment later)
         // else
         //     employeeService.updateEmployee(employee)
@@ -148,6 +177,8 @@ export default function DataTable() {
                 <NewPlayerForm
                     addOrEdit={addOrEdit}
                     recordForEdit={employeeForEdit}
+                    skills={skills}
+                    employees={employees}
                 />
             </Popup>
         </React.Fragment>

@@ -16,11 +16,11 @@ export default function Select(props) {
                 name={name}
                 value={value}
                 onChange={onChange}>
-                <MenuItem value="">None</MenuItem>
+                <MenuItem value="">--Select a Skill--</MenuItem>
                 {
                     typeof options !== 'undefined' ?
                         options.map(
-                            item => (<MenuItem key={item.id} value={item.id}>{item.title}</MenuItem>)
+                            (item, index) => (<MenuItem key={index} value={item.name}>{item.name}</MenuItem>)
                         ) : null
                 }
             </MuiSelect>
