@@ -4,7 +4,6 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import DataTable from './DataTable';
 
-// const { TblContainer } = UseTable();
 const styles = makeStyles((theme) => ({
     root: {
         height: '90vh',
@@ -34,13 +33,7 @@ export default function DatabasePageLayout() {
                             <Typography variant="h2" className={classes.header}>
                                 Player Database
                             </Typography>
-
-
-                            {/*Put use Data Table Component Here!*/}
                             <DataTable />
-
-
-
                         </Grid>
                     </Grid>
                 </Grid>

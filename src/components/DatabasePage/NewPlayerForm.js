@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Grid, Typography, Chip } from '@material-ui/core';
 import Controls from "../../components/controls/Controls";
 import { useForm, Form } from '../useForm';
@@ -30,7 +30,7 @@ const initialFValues = {
 export default function NewPlayerForm(props) {
     const classes = useStyles();
 
-    const { addOrEdit, recordForEdit, skills, employees } = props
+    const { mutateEmployee, employeeForEdit, skills, employees } = props
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
@@ -56,10 +56,6 @@ export default function NewPlayerForm(props) {
         { key: 0, label: '', id: '', isBrandNew: false }
     ]);
 
-    function incrementKey() {
-        setKey(key + 1)
-    }
-
     const handleDelete = (chipToDelete) => () => {
         setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
     };
@@ -78,7 +74,7 @@ export default function NewPlayerForm(props) {
             chipNames.push(chipData.map(item => item.label.toLowerCase()))
             let isValueInChipArray = !chipNames.every(item => !item.includes(currentSelectValue.toLowerCase()))
             if (!isValueInChipArray) {
-                incrementKey()
+                setKey(key + 1)
                 let newId = ""
                 for (let i = 0; i < skills.length; i++) {
                     if (skills[i].name.toLowerCase() === currentSelectValue.toLowerCase()) {
@@ -86,7 +82,7 @@ export default function NewPlayerForm(props) {
                         break
                     }
                 }
-                const newChip = { key: key + 1, label: currentSelectValue, id: newId, isBrandNew: false } // fix id?
+                const newChip = { key: key + 1, label: currentSelectValue, id: newId, isBrandNew: false }
                 setChipData([...chipData, newChip]);
                 setCurrentSelectValue("")
             }
@@ -99,7 +95,7 @@ export default function NewPlayerForm(props) {
             chipNames.push(chipData.map(item => item.label.toLowerCase()))
             let isValueInChipArray = !chipNames.every(item => !item.includes(currentInputValue.toLowerCase()))
             if (!isValueInChipArray) {
-                incrementKey()
+                setKey(key + 1)
                 let newId = ""
                 let isNew = true
                 for (let i = 0; i < skills.length; i++) {
@@ -109,7 +105,7 @@ export default function NewPlayerForm(props) {
                         break
                     }
                 }
-                const newChip = { key: key + 1, label: currentInputValue, id: newId, isBrandNew: isNew } //fix id?
+                const newChip = { key: key + 1, label: currentInputValue, id: newId, isBrandNew: isNew }
                 setChipData([...chipData, newChip]);
                 setInputValue("")
             }
@@ -118,9 +114,15 @@ export default function NewPlayerForm(props) {
 
 
     useEffect(() => {
-        if (recordForEdit != null)
-            setValues({ ...recordForEdit })
-    }, [recordForEdit])
+        if (employeeForEdit != null) {
+            setValues({ firstname: employeeForEdit.firstname, lastname: employeeForEdit.lastname })
+            for (let i = key; i < employeeForEdit.skills.items.length; i++) {
+                chipData.push({ key: i + 1, label: employeeForEdit.skills.items[i].skill.name, id: employeeForEdit.skills.items[i].skill.id, isBrandNew: false })
+            }
+            setKey(chipData.length)
+            setChipData(chipData)
+        }
+    }, [employeeForEdit])
 
     const {
         values,
@@ -131,21 +133,35 @@ export default function NewPlayerForm(props) {
         resetForm
     } = useForm(initialFValues, true, validate);
 
+    function resetAllStates() {
+        setCurrentSelectValue("")
+        setInputValue("")
+        setKey(0)
+        setChipData([{ key: 0, label: '', id: '', isBrandNew: false }])
+    }
+
     const handleSubmit = e => {
         e.preventDefault()
         if (validate()) {
-            let verifyList = []
-            verifyList.push(employees.map(employee => employee.firstname.toLowerCase() + employee.lastname.toLowerCase()))
+            let verifyList = employees.map(employee => employee.firstname.toLowerCase() + employee.lastname.toLowerCase()).join(" ")
             let newName = values.firstname.toLowerCase() + values.lastname.toLowerCase()
-            let isDuplicate = !verifyList.every(item => (item !== newName))
-            if (isDuplicate) {
-                alert("A player with this exact first and last name already exists!")
+            let isDuplicate = verifyList.includes(newName)
+            if (employeeForEdit) {
+                if ((employeeForEdit.firstname === values.firstname) && (employeeForEdit.lastname === values.lastname)) {
+                    mutateEmployee(employeeForEdit.id, chipData, resetForm, true, false) // update employee
+                    resetAllStates()
+                } else {
+                    mutateEmployee(employeeForEdit.id, chipData, resetForm, false, true) //delete old employee
+                    mutateEmployee(values, chipData, resetForm, false, false) // add new employee
+                    resetAllStates()
+                }
             } else {
-                addOrEdit(values, skills, chipData, resetForm);
-                setCurrentSelectValue("")
-                setInputValue("")
-                setKey(0)
-                setChipData([{ key: 0, label: '', id: '', isBrandNew: false }])
+                if (isDuplicate) {
+                    alert("A player with this exact first and last name already exists!")
+                } else {
+                    mutateEmployee(values, chipData, resetForm, false, false); // add new employee
+                    resetAllStates()
+                }
             }
         }
     }
@@ -194,8 +210,6 @@ export default function NewPlayerForm(props) {
                         >
                             <AddBoxOutlinedIcon />
                         </Controls.ActionButton>
-                        {/* Add a Button here (just a simple blue +) that onClick gets the value
-                        from the Select with name=skillId and add it to the UI mentioned in handleAddButtonSubmit above*/}
                     </Grid>
                     <Grid container xs={12} justify="flex-start" alignItems="center">
                         <Controls.Input
@@ -210,8 +224,6 @@ export default function NewPlayerForm(props) {
                         >
                             <AddBoxOutlinedIcon />
                         </Controls.ActionButton>
-                        {/* Add a Button here (just a simple blue +) that onClick gets the value
-                     from the input with name=newSkill and add it to the UI mentioned in handleAddButtonSubmit above*/}
                     </Grid>
                     <Grid container xs={12} style={{ height: '4vh' }} />
                     <Typography variant='h5'>
