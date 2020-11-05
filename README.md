@@ -20,11 +20,13 @@ ProBuild is backed by one of the world's fastest database and efficient services
 # How to Setup
 
 You will first need to have Node >= 8.10 and npm >= 5.6 on your machine.
-You can download these globally by running the follow command in your command prompt or terminal
+If you do not already have these programs, you can read about [NodeJS](https://nodejs.org/en/) and [npm](https://www.npmjs.com/get-npm) here.
 
-In the project directory, you can run:
+With Node and npm installed, you will need to download the ProBuild project folder from github.
 
-> ### `npm start`
+Then, in the project directory, you can run:
+
+### `npm start`
 
 This runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -32,7 +34,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-> ### `npm test`
+### `npm test`
 
 Launches the test runner in the interactive watch mode.\
 ProBuild is fully back by Jest JS Unit Tests
