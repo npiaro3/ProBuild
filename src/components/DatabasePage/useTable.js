@@ -7,8 +7,8 @@ const useStyles = makeStyles(theme => ({
         marginTop: theme.spacing(3),
         '& thead th': {
             fontWeight: '600',
-            color: theme.palette.primary.main,
-            backgroundColor: theme.palette.primary.light,
+            color: '#3F51B5',
+            backgroundColor: '#CAD2EC',
         },
         '& tbody td': {
             fontWeight: '300',
@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
             backgroundColor: '#fffbf2',
             cursor: 'pointer',
         },
-    },
+    }
 }))
 
 export default function useTable(employees, headCells, filterFn) {

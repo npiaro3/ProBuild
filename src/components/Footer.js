@@ -6,7 +6,7 @@ import Link from '@material-ui/core/Link';
 
 function Copyright() {
     return (
-        <Typography variant="body2" color="textSecondary">
+        <Typography variant="body2" color='#6B6B6B'>
             {'Copyright © '}
             <Link color="inherit" href="https://material-ui.com/">
                 ProBuild

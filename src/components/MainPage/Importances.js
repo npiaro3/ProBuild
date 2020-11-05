@@ -7,24 +7,31 @@ import InfoCard from "./InfoCard";
 const useStyles = makeStyles((theme) => ({
     root: {
         height: '70vh',
+        width: '100vw'
     },
     frank: {
         backgroundImage: 'url(/images/frank-vogel.jpg)',
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
+        width: '50%',
+        height: '100%'
     },
     aws: {
         backgroundImage: 'url(/images/aws-logo.jpg)',
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
+        width: '50%',
+        height: '100%'
     },
     jest: {
         backgroundImage: 'url(/images/jest-logo.png)',
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
+        width: '50%',
+        height: '100%'
     },
 }));
 
@@ -34,34 +41,28 @@ export default function Importances() {
     return (
         <div id="importances">
             <Grid container component="main" className={classes.root}>
-                <CssBaseline />
-                <Grid item xs={false} sm={4} md={7} className={classes.frank} />
+                <Grid container className={classes.frank} />
                 <InfoCard
                     name='Trusted'
                     desc="ProBuild is used by professional coaches all around the world. 
                             The application is also featured in the National Basketball 
                             Association, American Basketball Association, NCAA, and EuroLeague."
-                    color='#F9D9B9'
                 />
             </Grid>
             <Grid container component="main" className={classes.root}>
-                <CssBaseline />
                 <InfoCard
                     name='Scalable'
                     desc="Player database is backed by Amazon Web Services
                             using the DynamoDB NoSQL database. Allowing for scalability in
                             player creation. The limits are endless."
-                    color='#F9D9B9'
                 />
-                <Grid item xs={false} sm={4} md={7} className={classes.aws} />
+                <Grid container className={classes.aws} />
             </Grid>
             <Grid container component="main" className={classes.root}>
-                <CssBaseline />
-                <Grid item xs={false} sm={4} md={7} className={classes.jest} />
+                <Grid container className={classes.jest} />
                 <InfoCard
                     name='Verified'
                     desc="Our Application is tested using Jest for full code coverage."
-                    color='#F9D9B9'
                 />
             </Grid>
         </div>

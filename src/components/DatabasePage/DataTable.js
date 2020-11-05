@@ -12,7 +12,7 @@ import Controls from "../controls/Controls";
 import { Search } from "@material-ui/icons";
 import AddIcon from '@material-ui/icons/Add';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
-import CloseIcon from '@material-ui/icons/Close';
+import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
 import Popup from '../Popup';
 import NewPlayerForm from './NewPlayerForm'
 import Notification from '../Notification'
@@ -198,7 +198,9 @@ export default function DataTable() {
             <Paper className={classes.pageContent}>
                 <Toolbar>
                     <Controls.Input
+                        title="Search Players by Name"
                         label="Search Players by Name"
+                        aria-label="Search Players by Name"
                         className={classes.searchInput}
                         InputProps={{
                             startAdornment: (
@@ -209,6 +211,7 @@ export default function DataTable() {
                         onChange={handleSearch}
                     />
                     <Controls.Button
+                        title={"add new"}
                         text="Add New"
                         variant="outlined"
                         startIcon={<AddIcon />}
@@ -232,13 +235,14 @@ export default function DataTable() {
                                         </TableCell>
                                         <TableCell>
                                             <Controls.ActionButton
+                                                title={"edit"}
                                                 color="primary"
                                                 onClick={() => { openInPopup(employee) }}
                                             >
                                                 <EditOutlinedIcon fontSize="small" />
                                             </Controls.ActionButton>
                                             <Controls.ActionButton
-                                                color="secondary"
+                                                title={"delete"}
                                                 onClick={() => {
                                                     setConfirmDialog({
                                                         isOpen: true,
@@ -247,11 +251,12 @@ export default function DataTable() {
                                                         onConfirm: () => { handleDeleteButton(employee) }
                                                     })
                                                 }}>
-                                                <CloseIcon fontSize="small" />
+                                                <CloseOutlinedIcon fontSize="small" style={{ color: "#D12378" }} />
                                             </Controls.ActionButton>
                                         </TableCell>
                                     </TableRow>
-                                ))
+                                )
+                            )
                         }
                     </TableBody>
                 </TblContainer>

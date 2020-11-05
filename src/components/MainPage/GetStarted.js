@@ -4,10 +4,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import InfoCard from "./InfoCard";
 import ImageButton from "./ImageButton"
 
-
 const useStyles = makeStyles((theme) => ({
     root: {
         height: '70vh',
+        width: '100vw'
     }
 }));
 
@@ -22,10 +22,11 @@ export default function GetStarted() {
                     desc="Get ready to view the player database, edit player attributes, and take part of an application destined for greatness!"
                     isIcon={true}
                 />
-                <Grid item xs={false} sm={4} md={7}>
+                <Grid container style={{ width: '50%' }}>
                     <ImageButton
                         url='/images/coaching.jpg'
-                        title='View Player Database' />
+                        title='View Player Database'
+                    />
                 </Grid>
             </Grid>
         </div>

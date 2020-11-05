@@ -85,18 +85,18 @@ export default function ContactInfo() {
                                 Contact Us
                             </Typography>
                             <form className={classes.form} noValidate autoComplete="off">
-                                <TextField id="outlined-basic" label="First Name" variant="outlined" />
-                                <TextField id="outlined-basic" label="Last Name" variant="outlined" />
-                                <TextField id="outlined-basic" label="Email" variant="outlined" />
+                                <TextField title="First Name" label="First Name" variant="outlined" />
+                                <TextField title="Last Name" label="Last Name" variant="outlined" />
+                                <TextField title="Email" label="Email" variant="outlined" />
                                 <TextField
-                                    id="outlined-multiline-static"
+                                    title="Message"
                                     label="Message"
                                     multiline
                                     rows={4}
                                     placeholder="Write inquiry here"
                                     variant="outlined"
                                 />
-                                <Button variant="contained" color="secondary">Submit</Button>
+                                <Button title="button" variant="contained" style={{ color: "#B30025" }} >Submit</Button>
                             </form>
                         </Grid>
                     </Grid>
