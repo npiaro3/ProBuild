@@ -56,14 +56,18 @@ export default function DataTable() {
 
     useEffect(() => { getData() }, [])
     async function getData() {
+        const returnValue = { employeeData: {}, skillData: {} }
         try {
             const employeeData = await API.graphql(graphqlOperation(ListEmployees))
             const skillData = await API.graphql(graphqlOperation(ListSkills))
+            returnValue.employeeData = employeeData.data.listEmployees.items
+            returnValue.skillData = skillData.data.listSkills.items
             updateEmployees(employeeData.data.listEmployees.items)
             updateSkills(skillData.data.listSkills.items)
         } catch (err) {
             console.log('There was an error fetching all players...', err)
         }
+        return returnValue
     }
 
     async function addEmployee(employeeInfo, chipData) {

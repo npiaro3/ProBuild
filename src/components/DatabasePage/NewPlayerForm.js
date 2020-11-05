@@ -112,8 +112,9 @@ export default function NewPlayerForm(props) {
         }
     }
 
-
-    useEffect(() => {
+    // eslint-disable-next-line
+    useEffect(() => { populateForm() }, [])
+    function populateForm() {
         if (employeeForEdit != null) {
             setValues({ firstname: employeeForEdit.firstname, lastname: employeeForEdit.lastname })
             for (let i = key; i < employeeForEdit.skills.items.length; i++) {
@@ -122,7 +123,7 @@ export default function NewPlayerForm(props) {
             setKey(chipData.length)
             setChipData(chipData)
         }
-    }, [employeeForEdit])
+    }
 
     const {
         values,
